@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pokemon_solid"
-            android:text="Recuperar Pokémon"
+            android:text="Pokémon Al Azar"
             android:textColor="@color/black" />
     </LinearLayout>
 
