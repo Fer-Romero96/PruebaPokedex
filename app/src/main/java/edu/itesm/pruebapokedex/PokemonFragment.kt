@@ -1,22 +1,21 @@
 package edu.itesm.pruebapokedex
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_pokemon.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.concurrent.fixedRateTimer
+import kotlin.random.Random
 
 class PokemonFragment : Fragment() {
 
@@ -30,7 +29,15 @@ class PokemonFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        getPokemon()
+        btnPokemon.setOnClickListener {
+            getPokemon(Random.nextInt(1,100))
+        }
+
+        fixedRateTimer("CambioPokemon",false,0,30000){
+            activity?.runOnUiThread {
+                getPokemon(Random.nextInt(1,100))
+            }
+        }
     }
 
     override fun onCreateView(
@@ -48,12 +55,12 @@ class PokemonFragment : Fragment() {
             .build()
     }
 
-    fun getPokemon(){
+    fun getPokemon(id : Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val callToService = getRetrofit().create(PokemonService::class.java)
-            val responseFromService = callToService.getPokemon(1)
+            val responseFromService = callToService.getPokemon(id)
 
             pokemon = responseFromService.body() as Pokemon
 
