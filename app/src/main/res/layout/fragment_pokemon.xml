@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pokemon_solid"
             android:text="Pokémon Al Azar"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </RelativeLayout>
